@@ -1,3 +1,7 @@
+networks:
+  internal_network:
+    external: true
+    name: my_internal_network
 services:
   n8n:
     build: .
@@ -20,9 +24,19 @@ services:
       - n8n_data:/home/node/.n8n
       - ./downloads:/downloads
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - internal_network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:5678/healthz"]
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:5678/healthz",
+        ]
       interval: 30s
       timeout: 10s
       retries: 5
