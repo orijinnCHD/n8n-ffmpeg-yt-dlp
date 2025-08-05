@@ -4,7 +4,7 @@ networks:
     name: my_internal_network
 services:
   n8n:
-    build: .
+    image: ghcr.io/orijinn/n8n-ffmpeg-yt-dlp:latest
     container_name: n8n_ffmpeg_yt-dlp
     ports:
       - "5678:5678"
